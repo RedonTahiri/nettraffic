@@ -1,13 +1,13 @@
 #!/bin/bash
 
 logfile="/dev/shm/netlog"
-prevdata="${cat "$logfile"}"
+prevdata="$(cat "$logfile")"
 
 rxcurrent="$(($(cat /sys/class/net/*/statistics/rx_bytes | paste -sd '+')))"
 txcurrent="$(($(cat /sys/class/net/*/statistics/tx_bytes | paste -sd '+')))"
 
 printf "DOWN %sKiB UP %sKiB\\n" \
-	"$(((rxcurrent-S{prevdata%% *})/1024))" \
-	"$(((txcurrent-S{prevdata##*})/1024))"
+	"$(((rxcurrent-${prevdata%% *})/1024))" \
+	"$(((txcurrent-${prevdata##* })/1024))"
 
 echo "$rxcurrent $txcurrent" > "$logfile"
