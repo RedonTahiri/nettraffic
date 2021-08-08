@@ -1,6 +1,6 @@
 #!/bin/bash
 
-logfile="${XDG_CACHE_HOME:-$HOME/.cache}/netlog"
+logfile="/dev/shm/netlog"
 prevdata="${cat "$logfile"}"
 
 rxcurrent="$(($(cat /sys/class/net/*/statistics/rx_bytes | paste -sd '+')))"
